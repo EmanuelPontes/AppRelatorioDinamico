@@ -1,0 +1,6 @@
+<nav mat-tab-nav-bar mat-align-tabs="center">
+    <a mat-tab-link [routerLink]="['./cadAtrb']" [active]="currentRoute == '/home/cadAtrb' || currentRoute == '/home'"> Cadastrar Atributos </a>
+    <a mat-tab-link [routerLink]="['./relto']"  [active]="currentRoute == '/home/relto' "> Relatorios </a>
+</nav>
+
+<router-outlet></router-outlet>
