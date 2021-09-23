@@ -56,6 +56,10 @@ export class CadastroAtributosComponent implements OnInit {
     this.subscriptions.forEach((subs) => subs.unsubscribe());
   }
 
+
+  public getTypeDescription(type: Number) {
+    return this.typeOptions.find(option => option.value === type)?.description;
+  }
   public onDelete () {
     console.log(this.selectedListAttr)
     this.selectedListAttr.forEach((attrb) => {
