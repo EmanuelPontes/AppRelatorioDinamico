@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Atributo } from '../../models/Atributo';
+import { CadastroAtributosService } from '../../services/cadastro-atributos/cadastro-atributos.service';
 
 @Component({
   selector: 'app-cadastro-atributos',
@@ -23,8 +26,17 @@ export class CadastroAtributosComponent implements OnInit {
       value: 2
     }
   ]
-  constructor(private formBuilder: FormBuilder,) { 
+
+  selectedListAttr: Array<Atributo>;
+  listAtributos: Array<Atributo>;
+
+  subscriptions: Array<Subscription>;
+
+  constructor(private formBuilder: FormBuilder, private cadastroAtributoService: CadastroAtributosService) { 
     this.createForm();
+    this.listAtributos = [];
+    this.subscriptions = [];
+    this.selectedListAttr = [];
   }
   
 
@@ -34,8 +46,62 @@ export class CadastroAtributosComponent implements OnInit {
       console.log("Valor select")
       console.log(v);
     })
+
+    this.subscriptions.push(this.getAtributoList());
   }
 
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.subscriptions.forEach((subs) => subs.unsubscribe());
+  }
+
+  public onDelete () {
+    console.log(this.selectedListAttr)
+    this.selectedListAttr.forEach((attrb) => {
+      let subscribtion = this.cadastroAtributoService.deleteAtributo(attrb.id).subscribe(
+        (res) => {
+          this.getAtributoList();
+          setTimeout(() => {
+            subscribtion.unsubscribe();
+          }, 100);
+        },
+        (err) => {
+          setTimeout(() => {
+            subscribtion.unsubscribe();
+          }, 100);
+        }
+      )
+    })
+  }
+  public onSubmitForm () {
+
+    let atributo = new Atributo(this.name?.value,this.description?.value, this.type?.value);
+    let subscribtion = this.cadastroAtributoService.postAtributo(atributo).subscribe(
+      (response) => {
+
+        this.getAtributoList();
+        setTimeout(() => {
+          subscribtion.unsubscribe();
+        }, 100);
+      },
+      (error) => {
+        setTimeout(() => {
+          subscribtion.unsubscribe();
+        }, 100);
+        
+      }
+    )
+  }
+
+  public getAtributoList() {
+    return this.cadastroAtributoService.getAtributos().subscribe(
+      (response: Array<Atributo>) => {
+        this.listAtributos = response;
+      },
+      (error) => {}
+    )
+  }
   get name() {
     return this.cadAttrbForm.get('name');
   }

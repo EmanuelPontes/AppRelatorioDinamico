@@ -1,40 +1,61 @@
-<form [formGroup]="cadAttrbForm">
+<div class="row justify-content-center pt-2">
+    <div class="col-md-5 pl-0">
+        <h3 class="text-danger">Atributos Cadastrados</h3>
 
-    <div class="row justify-content-center pt-2">
-        <div class="col-md-5 pl-0">
-            <h3 class="">Atributos Cadastrados</h3>
-        </div>
-        <div class="col-md-1">
-            <div class="vl"></div>
-        </div>
-        <div class="col-md-5">
-            <div class=" row">
-                <mat-form-field class="px-0"  appearance="fill" floatLabel="auto">
-                    <mat-label>Novo atributo</mat-label>
-                    <input matInput placeholder="Digite o nome" formControlName="name">
-                </mat-form-field>
-            </div>
-            <div class=" row">
-                <mat-form-field class="px-0"  appearance="fill" floatLabel="auto">
-                    <mat-label>Nova Descrição</mat-label>
-                    <input matInput placeholder="Digite a descrição" formControlName="description">
-                </mat-form-field>
-            </div>
-            <div class=" row">
-                <mat-form-field class="px-0" appearance="fill">
-                    <mat-label>Selecionar tipo</mat-label>
-                    <mat-select formControlName="type">
-                      <mat-option *ngFor="let option of typeOptions" [value]="option.value">{{option.description}}</mat-option>
-                    </mat-select>
-                    <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint> -->
-                </mat-form-field>
-            </div>
-            <div class="row">
-                <button class="px-0" mat-stroked-button color="primary">Cadastrar</button>
-            </div>
-        </div>
+        <span style="font-size: 0.7rem;">Excluir: {{attrbts.selectedOptions.selected.length}} atributo(s)</span>
+        <button mat-icon-button aria-label="Example icon button with a vertical three dot icon" (click)="onDelete()">
+            <mat-icon color="primary">delete</mat-icon>
+        </button>
+        <mat-selection-list [(ngModel)]="selectedListAttr" #attrbts>
+            <mat-list-option *ngFor="let atributo of listAtributos" [value]="atributo">
+                <small>{{atributo.name}} - {{atributo.description}}</small>
+            </mat-list-option>
+
+        </mat-selection-list>
     </div>
-    
-    
-    
-</form>
+    <div class="col-md-1">
+        <div class="vl"></div>
+    </div>
+    <div class="col-md-5">
+        <div class="row">
+            <h3 class="text-danger px-0">Novo Atributo</h3>
+        </div>
+        <div class="row">
+            <form [formGroup]="cadAttrbForm">
+                <div class="col-md-12">
+                    <div class=" row">
+                        <mat-form-field class="px-0" appearance="fill" floatLabel="auto">
+                            <mat-label>Novo atributo</mat-label>
+                            <input matInput placeholder="Digite o nome" formControlName="name">
+                        </mat-form-field>
+                    </div>
+                    <div class=" row">
+                        <mat-form-field class="px-0" appearance="fill" floatLabel="auto">
+                            <mat-label>Nova Descrição</mat-label>
+                            <input matInput placeholder="Digite a descrição" formControlName="description">
+                        </mat-form-field>
+                    </div>
+                    <div class=" row">
+                        <mat-form-field class="px-0" appearance="fill">
+                            <mat-label>Selecionar tipo</mat-label>
+                            <mat-select formControlName="type">
+                                <mat-option *ngFor="let option of typeOptions" [value]="option.value">{{option.description}}
+                                </mat-option>
+                            </mat-select>
+                            <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <button  mat-stroked-button color="primary" (click)="onSubmitForm()">Cadastrar</button>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+        
+        
+
+
+    </div>
+
+</div>

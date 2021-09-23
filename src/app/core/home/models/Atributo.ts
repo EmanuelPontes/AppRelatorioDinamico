@@ -1,7 +1,8 @@
 export class Atributo {
-    private name: String;
-    private description: String;
-    private type: Number;
+    public id!: Number;
+    public name: String;
+    public description: String;
+    public type: Number;
 
     constructor(name: String, description: String, type: Number) {
         this.name = name;

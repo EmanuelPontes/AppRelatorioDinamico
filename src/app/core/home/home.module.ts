@@ -8,10 +8,15 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
+
 
 import { HomeComponent } from './components/home/home.component';
 import { CadastroAtributosComponent } from './components/cadastro-atributos/cadastro-atributos.component';
 import { RelatoriosComponent } from './components/relatorios/relatorios.component';
+import { CadastroAtributosService } from './services/cadastro-atributos/cadastro-atributos.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 const routes: Routes = [
@@ -44,10 +49,14 @@ const routes: Routes = [
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    HttpClientModule,
+    MatListModule,
+    MatIconModule
   ],
   providers: [
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}},
+    CadastroAtributosService
   ]
 })
 export class HomeModule { }
