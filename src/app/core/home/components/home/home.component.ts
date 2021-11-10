@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
     this.router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {
         this.currentRoute = e.url;
+        console.log(this.currentRoute);
       }
     });
     

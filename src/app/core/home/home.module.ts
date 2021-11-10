@@ -10,8 +10,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
-
-
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatTableModule} from '@angular/material/table';
 import { HomeComponent } from './components/home/home.component';
 import { CadastroAtributosComponent } from './components/cadastro-atributos/cadastro-atributos.component';
 import { RelatoriosComponent } from './components/relatorios/relatorios.component';
@@ -20,7 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 const routes: Routes = [
-  {path: '', redirectTo:'/home', pathMatch:'full'},
+  {path: '', redirectTo:'home', pathMatch:'full'},
   {path: 'home', redirectTo:'/home/cadAtrb', pathMatch:'full'},
   { 
     path: 'home', 
@@ -52,7 +52,9 @@ const routes: Routes = [
     MatDividerModule,
     HttpClientModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatStepperModule,
+    MatTableModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}},

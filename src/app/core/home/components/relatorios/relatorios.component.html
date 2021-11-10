@@ -1,1 +1,141 @@
-<p>relatorios works!</p>
+<div class="row justify-content-center pt-2">
+    <div class="col-md-10">
+        <mat-stepper [linear]="isLinear" #stepper>
+            <mat-step [stepControl]="attrbsSelctForm">
+                <form [formGroup]="attrbsSelctForm">
+                    <div class="col-md-12 pt-3">
+                        <div class="row">
+                            <ng-template matStepLabel>Selecionar os atributos</ng-template>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Atributos para o relatorio</mat-label>
+                                <mat-select formControlName="attributes" multiple>
+                                    <mat-option *ngFor="let atributo of listAtributos" [value]="atributo">
+                                        {{atributo.name}} -
+                                        {{atributo.description}}: {{getTypeDescription(atributo.type)}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                    </div>
+
+                    <div>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <!-- #docregion label -->
+            <mat-step [stepControl]="reportLayoutForm" label="Configurar layout">
+                <!-- #enddocregion label -->
+
+                <div class="col-md-12 pt-3">
+                    <div class="row">
+                        <table mat-table [dataSource]="listAtributos" class="mat-elevation-z8" matSort>
+                            <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+                                <th mat-header-cell *matHeaderCellDef [ngClass]="{'mat-sort-header': isOrderBy(column)}">
+                                    {{column}}
+                                </th>
+                                <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                        </table>
+                    </div>
+
+                    <div class="row pt-3">
+                        <form [formGroup]="reportLayoutForm">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Definir sequencia de apresentação</mat-label>
+                                        <mat-select formControlName="sequence" multiple>
+                                            <mat-option *ngFor="let atributo of attributes?.value" [value]="atributo">
+                                                {{atributo.name}} -
+                                                {{atributo.description}}: {{getTypeDescription(atributo.type)}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="row">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Atribuir ordenação ascendente</mat-label>
+                                        <mat-select formControlName="orderByAsc" multiple>
+                                            <mat-option *ngFor="let atributo of getOrderByAscList()" [value]="atributo">
+                                                {{atributo.name}} -
+                                                {{atributo.description}}: {{getTypeDescription(atributo.type)}}
+                
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="row">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Atribuir ordenação descendente</mat-label>
+                                        <mat-select formControlName="orderByDsc" multiple>
+                                            <mat-option *ngFor="let atributo of getOrderByDscList()" [value]="atributo">
+                                                {{atributo.name}} -
+                                                {{atributo.description}}: {{getTypeDescription(atributo.type)}}
+                
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="row">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Atribuir prioridade de ordenação</mat-label>
+                                        <mat-select formControlName="isOrderInSequence" multiple>
+                                            <mat-option *ngFor="let atributo of getOrderByList()" [value]="atributo">
+                                                {{atributo.name}} -
+                                                {{atributo.description}}: {{getTypeDescription(atributo.type)}}
+                
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="row">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Atribuir acumulador</mat-label>
+                                        <mat-select formControlName="accumulator" multiple>
+                                            <mat-option *ngFor="let atributo of attributes?.value" [value]="atributo">
+                                                {{atributo.name}} -
+                                                {{atributo.description}}: {{getTypeDescription(atributo.type)}}
+                
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="row">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Atribuir quebra</mat-label>
+                                        <mat-select formControlName="isBreak" multiple>
+                                            <mat-option *ngFor="let atributo of attributes?.value" [value]="atributo">
+                                                {{atributo.name}} -
+                                                {{atributo.description}}: {{getTypeDescription(atributo.type)}}
+                
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div>
+                                <button mat-button matStepperPrevious>Back</button>
+                                <button mat-button matStepperNext>Next</button>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Gerar</ng-template>
+                <p>You are now done.</p>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                </div>
+            </mat-step>
+        </mat-stepper>
+    </div>
+</div>

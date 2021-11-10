@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Atributo } from '../../models/Atributo';
@@ -9,7 +9,7 @@ import { CadastroAtributosService } from '../../services/cadastro-atributos/cada
   templateUrl: './cadastro-atributos.component.html',
   styleUrls: ['./cadastro-atributos.component.scss']
 })
-export class CadastroAtributosComponent implements OnInit {
+export class CadastroAtributosComponent implements OnInit, OnDestroy {
   cadAttrbForm!: FormGroup;
 
   typeOptions = [
